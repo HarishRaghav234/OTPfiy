@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import NavbarButtons from "./NavbarButtons"
 import { useState } from "react"
 const Navbar = () => {
@@ -12,7 +13,9 @@ const Navbar = () => {
           <div className=" flex flex-col max-w-screen-xl px-4 mx-auto md:items-center md:justify-between md:flex-row md:px-6 lg:px-8 text-white">
               <div className="p-4 flex flex-row items-center justify-between">
                 <div className="font-neutraface font-bold text-5xl">
+                    <Link to='/'>
                     OTPfiy
+                    </Link>
                 </div>
                 <button className="md:hidden rounded-lg focus:outline-none focus:shadow-outline" onClick={toggleMenuBtn}>
                   <svg fill="white" viewBox="0 0 20 20" className="w-6 h-6">
