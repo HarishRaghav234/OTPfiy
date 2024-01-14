@@ -3,7 +3,7 @@ import Sidebar from "../components/Sidebar"
 
 const Dashboard = () => {
   return (
-    <div className=" text-white text-3xl text-center">
+    <div className=" text-white text-center">
       <div className=" grid grid-cols-4">
         <div className=" col-span-1">
             <Sidebar />

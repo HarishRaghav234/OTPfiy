@@ -1,13 +1,13 @@
-import { motion } from "framer-motion"
 import { useContext, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
+
 import axios from "../api/axios"
 import AuthContext from "../context/AuthProvider";
-
 
 const REGEX_EMAIL = /^[^\s@]+@gmail\.com$/;
 const REGEX_PASSWORD = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
 const LOGIN_URL = '/login'
+
 
 const LoginForms = () => {
     const [registationData, setRegistationData] = useState({
@@ -79,31 +79,17 @@ const LoginForms = () => {
                     withCredentials: true,
                 }
             )
-            console.log(response)
-            const accessToken = response?.data?.accessToken
+            if (response.data[1] === 401){showPopUp({ error:true, title:'Error', message:'Invalid Password'}); return}
+            const accessToken = response?.data?.access_token
             setAuth({'user':registationData.email, 'password':registationData.password, 'accessToken': accessToken})
             navigate('/auth/dashboard')
         } catch (error) {
             if( !error?.response){ showPopUp({ error:true, title:'Error', message:'No server responce'});}
-            else{showPopUp({error:true, title:'Error',message:'Sign Up Failed'});}
+            else{showPopUp({error:true, title:'Error',message:'Login Failed'});}
         }
     }
   return (
     <section>
-         {
-        errorMsg.value && 
-        <motion.div 
-        className={errorMsg.error ? 
-        "w-full md:w-1/2 mx-auto p-2 flex flex-row gap-3 justify-center text-white text-lg  rounded-lg bg-red-200/50 ":
-        "w-full md:w-1/2 mx-auto p-2 flex flex-row gap-3 justify-center text-white text-lg  rounded-lg bg-green-200/50 "
-        }
-        initial= {{y:-10,opacity:0}}
-        animate ={{y:0,opacity:1, transition:{duration:1}}}
-        >
-            <div className=" text-center font-medium">{errorMsg.title}</div>
-            <div className=" text-center font-light italic">{errorMsg.message}</div>
-        </motion.div>
-        }
         <div className=' container mx-auto bg-[url(/Images/Turtle-bg.png)] bg-no-repeat bg-right-bottom text-white mt-10 h-[27rem]'>
             <div className=" flex justify-center items-center">
                 <div 
@@ -173,7 +159,21 @@ const LoginForms = () => {
                 </div>
             </div>
         </div>
+        {/* <ErrorMessage props = { errorMsg } /> */}
+        {
+        errorMsg.value && 
+        <div 
+        className={errorMsg.error ? 
+        "w-full md:w-1/2 mx-auto p-2 flex flex-row gap-3 justify-center text-white text-lg  rounded-lg bg-red-200/50 ":
+        "w-full md:w-1/2 mx-auto p-2 flex flex-row gap-3 justify-center text-white text-lg  rounded-lg bg-green-200/50 "
+        }
+        >
+            <div className=" text-center font-medium">{errorMsg.title}</div>
+            <div className=" text-center font-light italic">{errorMsg.message}</div>
+        </div>
+        }
     </section>
+    
   )
 }
 

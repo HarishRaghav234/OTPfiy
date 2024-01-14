@@ -2,7 +2,7 @@ import linkedIn from '/Images/icons/linkedIn.svg'
 import gitHub from '/Images/icons/Github.svg'
 const Footer = () => {
   return (
-    <footer className='absolute bottom-2 w-full'>
+    <footer className=' w-full'>
     <div className=" container mt-20 mx-auto text-white">
         <div className=" font-neutraface text-2xl">Dev</div>
         <div className=" grid grid-cols-6 mt-5 justify-center">
