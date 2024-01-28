@@ -1,7 +1,7 @@
-import { motion } from "framer-motion"
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import axios from "../api/axios"
+import ErrorContext from "../context/ErrorProvider";
 
 const REGEX_EMAIL = /^[^\s@]+@gmail\.com$/;
 const REGEX_PASSWORD = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
@@ -23,13 +23,9 @@ const SignUpForms = () => {
         password:false,
         otp:false
     })
-    const [errorMsg,setErrorMsg] = useState({
-        error:false,
-        value:false,
-        title:"",
-        message:"",
-    })
+
     const [next,setNext] = useState(false)
+    const { setErrorObj } =  useContext(ErrorContext)
 
     const navigate = useNavigate()
 
@@ -74,9 +70,9 @@ const SignUpForms = () => {
     }
 
     const showPopUp = ({error, title, message}) => {
-        setErrorMsg({error: error, value:true, title:title, message:message})
+        setErrorObj({error: error, value:true, title:title, message:message})
         setTimeout(() => {
-            setErrorMsg({value:false})
+            setErrorObj({value:false})
         },3000)
     }
     const goBack = () => {setNext((perVal) => (!perVal))} 
@@ -135,7 +131,7 @@ const SignUpForms = () => {
         const email =  isValidGmail(registationData.email) 
         const pwd =  isValidPassword(registationData.password)
         if(!email | !pwd ){
-            setErrorMsg({title:"Error",message:"Check Your Email and password",value:true})
+            showPopUp({error:true, title:"Error",message:"Check Your Email and password",value:true})
             return
         }
         try {
@@ -150,7 +146,7 @@ const SignUpForms = () => {
             showPopUp({error:false, title:'success'})
             if(response.status === 200){
                 console.log("hoorayyy");
-                navigate('/dashboard')
+                navigate('auth/dashboard')
             }
         } catch (error) {
             if( !error?.response){ showPopUp({ error:true, title:'Error', message:'No server responce'});}
@@ -345,20 +341,6 @@ const SignUpForms = () => {
                 </div>
             </div>
         </div>
-        {
-        errorMsg.value && 
-        <motion.div 
-        className={errorMsg.error ? 
-        "w-full md:w-1/2 mx-auto p-2 flex flex-row gap-3 justify-center text-white text-lg  rounded-lg bg-red-200/50 ":
-        "w-full md:w-1/2 mx-auto p-2 flex flex-row gap-3 justify-center text-white text-lg  rounded-lg bg-green-200/50 "
-        }
-        initial= {{y:-10,opacity:0}}
-        animate ={{y:0,opacity:1, transition:{duration:1}}}
-        >
-            <div className=" text-center font-medium">{errorMsg.title}</div>
-            <div className=" text-center font-light italic">{errorMsg.message}</div>
-        </motion.div>
-        }
     </section>
   )
 }

@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom"
 
 import axios from "../api/axios"
 import AuthContext from "../context/AuthProvider";
+import ErrorContext from "../context/ErrorProvider";
 
 const REGEX_EMAIL = /^[^\s@]+@gmail\.com$/;
 const REGEX_PASSWORD = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
@@ -18,16 +19,11 @@ const LoginForms = () => {
         email:false,
         password:false,
     })
-    const [errorMsg,setErrorMsg] = useState({
-        error:false,
-        value:false,
-        title:"",
-        message:"",
-    })
 
     const navigate = useNavigate()
 
     const { setAuth } = useContext(AuthContext)
+    const { setErrorObj } = useContext(ErrorContext)
 
     function isValidGmail(email) {
         return  REGEX_EMAIL.test(String(email).trim().toLowerCase());
@@ -38,9 +34,9 @@ const LoginForms = () => {
     }
 
     const showPopUp = ({error, title, message}) => {
-        setErrorMsg({error: error, value:true, title:title, message:message})
+        setErrorObj({error: error, value:true, title:title, message:message})
         setTimeout(() => {
-            setErrorMsg({value:false})
+            setErrorObj({value:false})
         },3000)
     } 
 
@@ -64,6 +60,7 @@ const LoginForms = () => {
             }))
         }
     }
+    
     const handleSubmit = async (event) => {
         event.preventDefault();
         const mail =  isValidGmail(registationData.email) 
@@ -159,19 +156,6 @@ const LoginForms = () => {
                 </div>
             </div>
         </div>
-        {/* <ErrorMessage props = { errorMsg } /> */}
-        {
-        errorMsg.value && 
-        <div 
-        className={errorMsg.error ? 
-        "w-full md:w-1/2 mx-auto p-2 flex flex-row gap-3 justify-center text-white text-lg  rounded-lg bg-red-200/50 ":
-        "w-full md:w-1/2 mx-auto p-2 flex flex-row gap-3 justify-center text-white text-lg  rounded-lg bg-green-200/50 "
-        }
-        >
-            <div className=" text-center font-medium">{errorMsg.title}</div>
-            <div className=" text-center font-light italic">{errorMsg.message}</div>
-        </div>
-        }
     </section>
     
   )

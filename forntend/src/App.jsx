@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import ErrorMessage from './components/ErrorMessage';
 
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
     <>
         <Navbar/>
         <Outlet />
+        <ErrorMessage />
         <Footer />
     </>
   )

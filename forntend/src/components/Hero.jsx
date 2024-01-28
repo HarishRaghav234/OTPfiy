@@ -2,7 +2,7 @@ const Hero = () => {
   return (
     <div>
         <div className=" grid grid-cols-10 text-white container mx-auto pt-48 bg-[url('/Images/Turtle-bg.png')] bg-no-repeat bg-contain bg-right-bottom">
-            <div className=" col-span-6">
+            <div className=" md:col-span-6 col-span-10">
                 <div className=" text-4xl">
                 Lorem Ipsum Dolor
                 </div>
