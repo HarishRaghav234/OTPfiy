@@ -10,7 +10,7 @@ This project is an easy-to-implement OTP (One-Time Password) service that utiliz
 ## Key Features:
 
    + **Simple and secure OTP generation:** Generate random, secure OTPs for user authentication.
-   +** Gmail integration:** Send OTPs directly to users' inboxes for convenient verification.
+   + **Gmail integration:** Send OTPs directly to users' inboxes for convenient verification.
    + **API access:** Use the provided API key to integrate OTP functionality into your applications.
    + **User accounts:** Create and manage user accounts with dedicated API keys for secure access.
    + **Modern tech stack:** Built with React JS, TailWind CSS, Framer Motion, JWT, and Flask for a robust and scalable solution.
